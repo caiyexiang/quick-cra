@@ -1,6 +1,7 @@
 #! /usr/bin/env node
-const { execSync } = require("child_process");
+const { execSync: RawExecSync } = require("child_process");
 const fs = require('fs');
+const execSync = (command) => RawExecSync(command, { stdio: [0, 1, 2] });
 
 const projectPath = process.argv[2];
 
@@ -51,7 +52,9 @@ const main = () => {
   }
 
   // 添加git记录
-  execSync('git add * && git commit -m "Project configuration initialization."');
+  execSync(
+    `cd ${projectPath} && git commit -a -m "Project configuration initialization."`
+  );
 
   console.log("---- 完成创建 ----");
   console.timeEnd("创建React应用");
