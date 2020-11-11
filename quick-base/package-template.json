@@ -1,14 +1,11 @@
 {
-  "name": "koa-demo",
+  "name": "base-node-demo",
   "version": "0.0.1",
-  "description": "Koa2 quick start with typescript.",
+  "description": "Base node typescript project.",
   "main": "index.js",
   "author": "wuhao",
   "license": "MIT",
   "devDependencies": {
-    "@types/koa": "^2.11.6",
-    "@types/koa-bodyparser": "^4.3.0",
-    "@types/koa-router": "^7.4.1",
     "@types/node": "^14.14.7",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
@@ -21,12 +18,6 @@
     "standard-version": "^9.0.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
-  },
-  "dependencies": {
-    "koa": "^2.13.0",
-    "koa-bodyparser": "^4.3.0",
-    "koa-router": "^10.0.0",
-    "koa2-cors": "^2.0.6"
   },
   "scripts": {
     "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix",

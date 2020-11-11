@@ -1,0 +1,6 @@
+/node_modules
+dump.rdb
+.vs
+.vscode
+/dist
+yarn.lock

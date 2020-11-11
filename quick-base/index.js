@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 const { execSync: RawExecSync } = require("child_process");
-const { chdir } = require('process');
+const { chdir } = require("process");
 const fs = require("fs");
 const execSync = (command) => RawExecSync(command, { stdio: [0, 1, 2] });
 
@@ -25,11 +25,11 @@ const writeJsonSync = (path, data) => {
 
 /**
  * 快速使用cra创建react应用
- * 
+ *
  * @param {string} projectPath 项目名称
  */
 module.exports = function (projectPath) {
-  console.time("创建koa2服务器");
+  console.time("创建基础node项目");
   console.log("---- 开始创建 ----");
   // 新建项目目录
   execSync(`mkdir ${projectPath}`);
@@ -57,19 +57,12 @@ module.exports = function (projectPath) {
   fs.writeFileSync("./index.js", "require('./dist');\n");
 
   // 复制src模板
-  const srcFiles = fs.readdirSync(`${__dirname}/src/routes`);
-  execSync("mkdir src && cd src && mkdir routes");
-  for (const filename of srcFiles) {
-    fs.copyFileSync(
-      `${__dirname}/src/routes/${filename}`,
-      `./src/routes/${filename}`
-    );
-  }
+  execSync("mkdir src");
   fs.copyFileSync(`${__dirname}/src/index.ts`, "./src/index.ts");
 
   // 添加git记录
   execSync(`git add -A && git commit -m "Project initialization."`);
 
   console.log("---- 完成创建 ----");
-  console.timeEnd("创建koa2服务器");
+  console.timeEnd("创建基础node项目");
 };

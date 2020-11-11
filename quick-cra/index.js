@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 const { execSync: RawExecSync } = require("child_process");
+const { chdir } = require("process");
 const fs = require('fs');
 const execSync = (command) => RawExecSync(command, { stdio: [0, 1, 2] });
 
@@ -33,30 +34,34 @@ module.exports = function (projectPath) {
   // 用cra创建应用
   execSync(`yarn create react-app ${projectPath} --template typescript`);
 
+  // 进入目录
+  chdir(`./${projectPath}`);
+
   // 添加开发依赖
   execSync(
-    `cd ${projectPath} && yarn add -D commitizen customize-cra cz-conventional-changelog eslint eslint-config-airbnb-typescript eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks prettier react-app-rewired`
+    `yarn add -D commitizen customize-cra cz-conventional-changelog eslint eslint-config-airbnb-typescript eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks prettier react-app-rewired standard-version`
   );
 
   // 修改package.json
-  const packageJson = readJsonSync(`${projectPath}/package.json`);
+  const packageJson = readJsonSync(`./package.json`);
   packageJson.config = {
     commitizen: {
       path: "cz-conventional-changelog",
     },
   };
   packageJson.scripts.commit = "./node_modules/.bin/git-cz";
-  writeJsonSync(`${projectPath}/package.json`, packageJson);
+  packageJson.scripts.release = "standard-version";
+  writeJsonSync(`./package.json`, packageJson);
 
   // 复制基础配置文件
   const configFiles = fs.readdirSync(`${__dirname}/configs`);
   for (const filename of configFiles) {
-    fs.copyFileSync(`${__dirname}/configs/${filename}`, `./${projectPath}/${filename}`);
+    fs.copyFileSync(`${__dirname}/configs/${filename}`, `./${filename}`);
   }
 
   // 添加git记录
   execSync(
-    `cd ${projectPath} && git commit -a -m "Project configuration initialization."`
+    `git commit -a -m "Project configuration initialization."`
   );
 
   console.log("---- 完成创建 ----");
