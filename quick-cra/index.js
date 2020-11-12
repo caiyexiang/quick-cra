@@ -61,7 +61,7 @@ module.exports = function (projectPath) {
 
   // 添加git记录
   execSync(
-    `git commit -a -m "Project configuration initialization."`
+    `git add -A && git commit -m "Project configuration initialization."`
   );
 
   console.log("---- 完成创建 ----");

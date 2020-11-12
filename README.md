@@ -11,6 +11,7 @@ chmod +x index.js
 alias quick-cra="path/to/quick-cra/index.js"
 
 # 创建项目
-quick-cra demo
+# quick-cra [projectType] [projectName]
+quick-cra cra demo
 cd demo
 ```
